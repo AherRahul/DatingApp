@@ -52,10 +52,10 @@ namespace Dating.API.Controllers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, userForRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userForRepo.Username)
-            };
-            
+                    new Claim(ClaimTypes.NameIdentifier, userForRepo.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userForRepo.Username)
+                };
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -71,9 +71,11 @@ namespace Dating.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new {
+            return Ok(new
+            {
                 token = tokenHandler.WriteToken(token)
             });
+
         }
     }
 }
