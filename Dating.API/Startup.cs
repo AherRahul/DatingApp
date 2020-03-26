@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Dating.API.Data;
 using Dating.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -42,6 +43,8 @@ namespace Dating.API
 
             services.AddCors();
 
+            services.AddAutoMapper(typeof(DatingRepository).Assembly);
+            
             services.AddScoped<IAuthRepository, AuthRepository>();
 
             services.AddScoped<IDatingRepository, DatingRepository>();
