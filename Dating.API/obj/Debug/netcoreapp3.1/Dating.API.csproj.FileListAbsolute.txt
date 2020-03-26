@@ -51,3 +51,7 @@ E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authenticat
 E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Data\UserSeedData.json
+E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\DatingApp\Dating.API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
