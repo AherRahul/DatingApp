@@ -20,6 +20,7 @@
         "@angular/platform-browser-dynamic": "~9.0.7",
         "@angular/router": "~9.0.7",
         "@auth0/angular-jwt": "^4.0.0",
+        "@kolkov/ngx-gallery": "^1.0.11",
         "alertifyjs": "^1.13.1",
         "angular-font-awesome": "^3.1.2",
         "bootstrap": "^4.4.1",
