@@ -43,6 +43,8 @@ namespace Dating.API
 
             services.AddCors();
 
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
             
             services.AddScoped<IAuthRepository, AuthRepository>();
@@ -93,7 +95,7 @@ namespace Dating.API
 
             app.UseAuthorization();
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             
             app.UseEndpoints(endpoints =>
             {
