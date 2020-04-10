@@ -131,9 +131,7 @@ namespace Dating.API.Controllers
         public async Task<IActionResult> DeletePhoto(int userId, int id)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            {
                 return Unauthorized();
-            }
 
             var user = await _repo.GetUser(userId);
 
@@ -142,16 +140,14 @@ namespace Dating.API.Controllers
 
             var photoFromRepo = await _repo.GetPhoto(id);
 
-            if (photoFromRepo.IsMain)
-                return BadRequest("you can not delete your main photo");
+            if(photoFromRepo.IsMain)
+                return BadRequest("You cannot delete your main photo");
 
-
-
-            if (photoFromRepo.PublicId != null)
+            if(photoFromRepo.PublicId != null)
             {
-                var deletionParams = new DeletionParams(photoFromRepo.PublicId);
+                var deleteParams = new DeletionParams(photoFromRepo.PublicId);
 
-                var result = _clouldinary.Destroy(deletionParams);
+                var result = _clouldinary.Destroy(deleteParams);
 
                 if (result.Result == "ok")
                 {

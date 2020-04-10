@@ -1,7 +1,7 @@
 import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -22,6 +22,7 @@ import { appRoutes } from './routes';
 import { MemberCardComponent } from './member/member-list/member-card/member-card.component';
 import { MemberDetailComponent } from './member/member-list/member-detail/member-detail.component';
 import { AlertifyService } from './_services/alertify.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AuthGuard } from './_guards/auth.guard';
 import { UserService } from './_services/user.service';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
@@ -56,7 +57,9 @@ export function tokenGetter() {
       HttpClientModule,
       BrowserAnimationsModule,
       FormsModule,
+      ReactiveFormsModule,
       BsDropdownModule.forRoot(),
+      BsDatepickerModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
       JwtModule.forRoot({
