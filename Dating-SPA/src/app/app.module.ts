@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { TabsModule } from 'ngx-bootstrap';
+import { TimeagoModule } from 'ngx-timeago';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotEditorComponent } from './member/member-list/phot-editor/phot-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 
+
 export function tokenGetter() {
    return localStorage.getItem('token');
 }
@@ -57,6 +59,7 @@ export function tokenGetter() {
       HttpClientModule,
       BrowserAnimationsModule,
       FormsModule,
+      TimeagoModule,
       ReactiveFormsModule,
       BsDropdownModule.forRoot(),
       BsDatepickerModule.forRoot(),
@@ -66,11 +69,12 @@ export function tokenGetter() {
          config: {
             tokenGetter: tokenGetter,
             whitelistedDomains: ['localhost:5000'],
-            blacklistedRoutes: ['localhost:5000/api/auth']
+            blacklistedRoutes: ['localhost:5000/api/auth/register']
          }
       }),
       TabsModule.forRoot(),
-      FileUploadModule
+      FileUploadModule,
+      TimeagoModule.forRoot()
    ],
    providers: [
       AuthService,
