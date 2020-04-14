@@ -15,5 +15,6 @@ namespace Dating.API.Data
         Task<User> GetUser(int id);
         Task<Photo> GetPhoto(int id);
         Task<Photo> GetMainPhotoForUser(int userId);
+        Task<Likes> GetLikes(int userId, int recipientId);
     }
 }

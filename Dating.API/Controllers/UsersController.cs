@@ -9,6 +9,7 @@ using Dating.API.Data;
 using Dating.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Dating.API.Models;
 
 namespace Dating.API.Controllers
 {
@@ -77,5 +78,37 @@ namespace Dating.API.Controllers
 
             throw new Exception($"upadting user {id} failed on save");
         }
+
+        [HttpPost("{id}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int id, int recipientId) 
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var like = await _repo.GetLikes(id, recipientId);
+
+            if (like != null) {
+                return BadRequest("You Already Like this user..!!");
+            }
+
+            if (await _repo.GetUser(recipientId) == null) {
+                return NotFound();
+            }
+
+            like = new Models.Likes {
+                LikerId = id,
+                LikeeID = recipientId
+            };
+
+            _repo.Add<Likes>(like);
+
+            if(await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Falied to Like User..!!");
+        }
+
     }
 }
