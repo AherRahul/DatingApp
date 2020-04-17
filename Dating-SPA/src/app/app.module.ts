@@ -37,6 +37,8 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotEditorComponent } from './member/member-list/phot-editor/phot-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ListResolver } from './_resolvers/list.resolver';
+import { MessagesResolver } from './_resolvers/message.resolver';
+import { MemberMessagesComponent } from './member/member-list/member-messages/member-messages.component';
 
 
 export function tokenGetter() {
@@ -54,7 +56,8 @@ export function tokenGetter() {
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotEditorComponent
+      PhotEditorComponent,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,
@@ -91,7 +94,8 @@ export function tokenGetter() {
       MemberListResolver,
       MemberEditResolver,
       PreventUnsavedChanges,
-      ListResolver
+      ListResolver,
+      MessagesResolver
    ],
    bootstrap: [
       AppComponent

@@ -22,5 +22,7 @@ namespace Dating.API.Models
         public ICollection<Photo> Photos { get; set; }
         public ICollection<Likes> Likers { get; set; }
         public ICollection<Likes> Likee { get; set; }
+        public ICollection<Message> MessagesReceived {get; set;}
+        public ICollection<Message> MessagesSent {get; set;}
     }
 }
