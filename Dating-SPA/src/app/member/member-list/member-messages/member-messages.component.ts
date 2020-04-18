@@ -4,6 +4,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Message } from 'src/app/_model/message';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-member-messages',
@@ -13,6 +14,7 @@ import { Message } from 'src/app/_model/message';
 export class MemberMessagesComponent implements OnInit {
   @Input() receipientId: number;
   messages: Message[];
+  newMessage: any = {};
 
   constructor(
     private userService: UserService,
@@ -26,8 +28,31 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   loadMessages() {
-    this.userService.getMessageThread(this.authService.decodedToken.nameid, this.receipientId).subscribe(message => {
-      this.messages = message;
+    const currentUserId = +this.authService.decodedToken.nameid;
+    this.userService.getMessageThread(this.authService.decodedToken.nameid, this.receipientId)
+    .pipe(
+      tap(messages => {
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < messages.length; i++) {
+          if (messages[i].isRead === false && messages[i].recipientId === currentUserId) {
+            this.userService.markAsRead(currentUserId, messages[i].id);
+          }
+        }
+      })
+    )
+    .subscribe(messages => {
+      this.messages = messages;
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
+
+  sendMessage() {
+    this.newMessage.recipientId = this.receipientId;
+    this.userService.sendMessage(this.authService.decodedToken.nameid, this.newMessage).subscribe((message: Message) => {
+      this.messages.unshift(message);
+      this.alertify.success('message send to ' + message.recipientKnownAs + '..!!');
+      this.newMessage.content = '';
     }, error => {
       this.alertify.error(error);
     });

@@ -85,9 +85,9 @@ namespace Dating.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, MessageForCreationDto messageForCreationDto)
         {
-            //var sender = await _repo.GetUser(userId);
+            var sender = await _repo.GetUser(userId);
 
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             messageForCreationDto.SenderId = userId;
@@ -108,6 +108,59 @@ namespace Dating.API.Controllers
             }
 
             throw new Exception("Creating the message failed on save");
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> DeleteMessage(int id, int userId) {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var messageFromRepo = await _repo.GetMessage(id);
+
+            if (messageFromRepo.SenderId == userId)
+            {
+                messageFromRepo.SenderDeleted = true;
+            }
+
+            if (messageFromRepo.RecipientId == userId)
+            {
+                messageFromRepo.RecipientDeleted = true;
+            }
+
+            if (messageFromRepo.SenderDeleted && messageFromRepo.RecipientDeleted)
+            {
+                _repo.Delete(messageFromRepo);
+            }
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception("Error while deleting message");
+        }
+
+        [HttpPost("{id}/read")]
+        public async Task<IActionResult> MarkMessageAsRead(int userId, int Id) {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var message = await _repo.GetMessage(Id);
+
+            if(message.RecipientId != userId)
+            {
+                return Unauthorized();
+            }
+
+            message.IsRead = true;
+
+            message.DateRead = DateTime.Now;
+
+            await _repo.SaveAll();
+
+            return NoContent();
         }
 
     }

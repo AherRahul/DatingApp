@@ -4,3 +4,7 @@ img {
     border-radius: 25px;
     display: inline;
 }
+
+.container {
+    height: 450px;
+}
